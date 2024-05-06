@@ -1,0 +1,5 @@
+outs:
+- md5: 134218234f37d68411596096877ee35b
+  size: 5616830
+  hash: md5
+  path: Sarcasm_Headlines_Dataset.json

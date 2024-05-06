@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/abhinavpratap/Desktop/Sarcasm-Detection/mlruns/349598655360028219/6e11f32aa0a54ab1823eed1ebbfea344/artifacts
+end_time: 1715024988073
+entry_point_name: ''
+experiment_id: '349598655360028219'
+lifecycle_stage: active
+run_id: 6e11f32aa0a54ab1823eed1ebbfea344
+run_name: kindly-skunk-760
+run_uuid: 6e11f32aa0a54ab1823eed1ebbfea344
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715024675685
+status: 4
+tags: []
+user_id: abhinavpratap
