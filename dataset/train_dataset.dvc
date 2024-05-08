@@ -1,0 +1,6 @@
+outs:
+- md5: 6d3d5744d6aa86928497dac2c2005f30.dir
+  size: 2908414
+  nfiles: 2
+  hash: md5
+  path: train_dataset

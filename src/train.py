@@ -1,24 +1,20 @@
 import pandas as pd
 import tensorflow as tf 
-from gensim.parsing.preprocessing import remove_stopwords
 import re
-import string
+from gensim.parsing.preprocessing import remove_stopwords
 import numpy as np 
 from tensorflow.keras.preprocessing.text import Tokenizer 
-from tensorflow.keras.preprocessing.sequence import pad_sequences 
-from sklearn.metrics import classification_report, confusion_matrix 
-from sklearn.model_selection import train_test_split
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from mlflow.tensorflow import MlflowCallback
 import joblib
 import mlflow
-from mlflow.tensorflow import MlflowCallback
 
 mlflow.login()
 
-
-df1 = pd.read_json('dataset/Sarcasm_Headlines_Dataset.json', lines=True)
-df2 = pd.read_json('dataset/Sarcasm_Headlines_Dataset_v2.json', lines=True)
-
-df = pd.concat([df1, df2], ignore_index=True) 
+train_text = pd.read_csv('dataset/train_dataset/train_text.csv')
+train_labels = pd.read_csv('dataset/train_dataset/train_labels.csv')
+valid_text = pd.read_csv('dataset/valid_dataset/valid_text.csv')
+valid_labels = pd.read_csv('dataset/valid_dataset/valid_labels.csv')
 
 def clean_text(sentences): 
     text = sentences.lower() 
@@ -33,13 +29,8 @@ def clean_text(sentences):
 
     return text 
 
-df['cleaned_headline']=df['headline'].map(clean_text)
-
-X = df['cleaned_headline']
-y = df['is_sarcastic']
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
-X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.1, random_state=42)
+cleaned_train_text = train_text.map(clean_text)
+cleaned_valid_text = valid_text.map(clean_text)
 
 max_length = 120
 
@@ -48,11 +39,12 @@ vocab_size = 10000
 embedding_dim = 100
 
 tokenizer = Tokenizer(num_words=vocab_size, oov_token='<OOV>') 
+tokenizer.fit_on_texts(cleaned_train_text['headline'])
 
-tokenizer.fit_on_texts(X_train)
+joblib.dump(tokenizer, 'artifacts/tokenizer.pkl')
 
-sequences_train = tokenizer.texts_to_sequences(X_train)
-sequences_valid = tokenizer.texts_to_sequences(X_val)
+sequences_train = tokenizer.texts_to_sequences(cleaned_train_text['headline'])
+sequences_valid = tokenizer.texts_to_sequences(cleaned_valid_text['headline'])
 
 train_padded = pad_sequences(sequences_train, 
                              padding='post', 
@@ -89,10 +81,10 @@ mlflow.tensorflow.autolog(disable=True)
 
 with mlflow.start_run() as run:
     model.fit(train_padded, 
-              y_train, 
+              train_labels, 
               epochs=5, 
               validation_data=(val_padded, 
-              y_val),
+              valid_labels),
               callbacks=[MlflowCallback(run)])
 
     model.save('models/model.keras')
