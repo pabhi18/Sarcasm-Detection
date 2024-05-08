@@ -1,0 +1,6 @@
+pandas
+tensorflow
+gensim
+joblib
+mlflow
+scikit-learn
