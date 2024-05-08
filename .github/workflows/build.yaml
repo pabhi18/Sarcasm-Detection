@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     paths:
-      - 'train.py'
+      - 'src/train.py'
 
 jobs:
   build-and-test:
@@ -22,7 +22,7 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Build model
-      run: python train.py
+      run: python src/train.py
 
     - name: Test model
-      run: python test.py
+      run: python src/test.py
