@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from numpy import triu
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.metrics import classification_report, confusion_matrix
