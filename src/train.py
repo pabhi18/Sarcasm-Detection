@@ -64,7 +64,7 @@ model = tf.keras.Sequential([
 
     tf.keras.layers.Flatten(), 
 
-    tf.keras.layers.Dropout(0.5), 
+    tf.keras.layers.Dropout(0.6), 
 
     tf.keras.layers.Dense(24, activation='relu'), 
   

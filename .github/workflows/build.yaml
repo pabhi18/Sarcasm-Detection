@@ -31,10 +31,6 @@ jobs:
         echo "Username: $DATABRICKS_USERNAME"
         echo "Password: $DATABRICKS_PASSWORD"
 
-        echo "$DATABRICKS_HOST" > databricks_host.txt
-        echo "$DATABRICKS_USERNAME" > databricks_username.txt
-        echo "$DATABRICKS_PASSWORD" > databricks_password.txt
-
         python src/train.py
 
     - name: Test model
