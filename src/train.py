@@ -1,6 +1,5 @@
 import pandas as pd
 import tensorflow as tf 
-import os
 import re
 from gensim.parsing.preprocessing import remove_stopwords
 import numpy as np 
@@ -10,18 +9,6 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from mlflow.tensorflow import MlflowCallback
 import joblib
 import mlflow
-
-databricks_host = os.getenv("DATABRICKS_HOST")
-databricks_username = os.getenv("DATABRICKS_USERNAME")
-databricks_password = os.getenv("DATABRICKS_PASSWORD")
-
-mlflow.set_tracking_uri(f"{databricks_host}/mlflow/v1")
-
-mlflow.set_databricks_creds(
-    host=databricks_host,
-    username=databricks_username,
-    password=databricks_password
-)
 
 mlflow.login()
 

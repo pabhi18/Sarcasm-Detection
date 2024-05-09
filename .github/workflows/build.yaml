@@ -22,16 +22,7 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Build model
-      env:
-        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-        DATABRICKS_USERNAME: ${{ secrets.DATABRICKS_USERNAME }}
-        DATABRICKS_PASSWORD: ${{ secrets.DATABRICKS_PASSWORD }}
-      run: |
-        echo "Databricks Host (should begin with https://): $DATABRICKS_HOST"
-        echo "Username: $DATABRICKS_USERNAME"
-        echo "Password: $DATABRICKS_PASSWORD"
-
-        python src/train.py
+      run: python src/train.py
 
     - name: Test model
       run: python src/test.py
