@@ -1,6 +1,6 @@
 pandas
 tensorflow
-gensim
+gensim==4.3.2
 joblib
 mlflow
 scikit-learn
