@@ -3,7 +3,6 @@ import tensorflow as tf
 import re
 from gensim.parsing.preprocessing import remove_stopwords
 import numpy as np 
-from numpy import triu
 from tensorflow.keras.preprocessing.text import Tokenizer 
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from mlflow.tensorflow import MlflowCallback
