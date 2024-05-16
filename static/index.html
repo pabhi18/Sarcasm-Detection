@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarcasm Detection Model</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .btn.predict {
+            background-color: #4CAF50;
+            margin-right: 10px;
+        }
+        .btn.reset {
+            background-color: #f44336;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sarcasm Detection Model</h1>
+        <input type="text" id="sentence" placeholder="Enter a sentence...">
+        <button class="btn predict" onclick="predict()">Predict</button>
+        <button class="btn reset" onclick="reset()">Reset</button>
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+         async function predict() {
+            const sentence = document.getElementById("sentence").value;
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({"text": sentence})
+                });
+
+                const data = await response.json();
+
+                document.getElementById("output").innerHTML = "Prediction: " + data.result;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function reset() {
+            document.getElementById("sentence").value = "";
+            document.getElementById("output").innerHTML = "";
+        }
+    </script>
+</body>
+</html>

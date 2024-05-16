@@ -7,15 +7,24 @@ import re
 from gensim.parsing.preprocessing import remove_stopwords
 import joblib
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"], 
+)
 
 tokenizer = joblib.load('artifacts/tokenizer.pkl')
 model = tf.keras.models.load_model('models/model.keras')
 
 class InputText(BaseModel):
     text: str
-    
+
 def clean_text(sentence): 
     text = sentence.lower() 
 
